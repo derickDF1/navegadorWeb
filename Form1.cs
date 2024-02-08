@@ -19,41 +19,43 @@ namespace navegadorWeb
 
         private void busquedaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            webBrowser1.GoHome();
+            //webView21.GoHome();
         }
-
+         
         private void buttonIr_Click(object sender, EventArgs e)
         {
             String urlIngresado = comboBox1.Text;
 
-            if (urlIngresado.Contains("https://"))
+            if (!(urlIngresado.StartsWith("https://")))
             {
-                String urlCompleto = "https://" + urlIngresado + "/";
-                comboBox1.Text = urlCompleto;
+                if (!(urlIngresado.Contains(".") == true))
+                {
+                    urlIngresado = "https://www.google.com/search?q=" + Uri.EscapeDataString(urlIngresado);
+                }
+                else
+                {
+                    urlIngresado = "https://" + urlIngresado + "/";
+                }
+                comboBox1.Text = urlIngresado;
             }
+            webView21.CoreWebView2.Navigate(urlIngresado);
 
-            if (urlIngresado.Contains(".") == true)
-            {
-                String urlCompleto = "https://www.google.com/search?q=" + urlIngresado;
-            }
-
-            webBrowser1.Navigate(new Uri(comboBox1.SelectedItem.ToString()));
         }
 
         private void adelanteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            webBrowser1.GoForward();
+           webView21.GoForward();
         }
 
         private void atrasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            webBrowser1.GoBack();
+            webView21.GoBack();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             comboBox1.SelectedIndex = 0;
-            //webBrowser1.GoHome();
+            //webView21.GoHome();
         }
 
         private void button2_Click(object sender, EventArgs e)
