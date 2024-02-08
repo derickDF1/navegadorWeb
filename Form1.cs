@@ -28,7 +28,7 @@ namespace navegadorWeb
 
             if (!(urlIngresado.StartsWith("https://")))
             {
-                if (!(urlIngresado.Contains(".") == true))
+                if (!(urlIngresado.Contains(".")))
                 {
                     urlIngresado = "https://www.google.com/search?q=" + Uri.EscapeDataString(urlIngresado);
                 }
