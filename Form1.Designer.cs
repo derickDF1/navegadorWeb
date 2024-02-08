@@ -48,7 +48,7 @@ namespace navegadorWeb
             this.adelanteToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1027, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1140, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -105,7 +105,7 @@ namespace navegadorWeb
             this.webView21.DefaultBackgroundColor = System.Drawing.Color.White;
             this.webView21.Location = new System.Drawing.Point(12, 68);
             this.webView21.Name = "webView21";
-            this.webView21.Size = new System.Drawing.Size(1003, 552);
+            this.webView21.Size = new System.Drawing.Size(1116, 660);
             this.webView21.Source = new System.Uri("https://www.google.com/", System.UriKind.Absolute);
             this.webView21.TabIndex = 5;
             this.webView21.ZoomFactor = 1D;
@@ -114,7 +114,7 @@ namespace navegadorWeb
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1027, 632);
+            this.ClientSize = new System.Drawing.Size(1140, 751);
             this.Controls.Add(this.webView21);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.buttonIr);

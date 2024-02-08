@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Web.WebView2.Core;
 
 namespace navegadorWeb
 {
@@ -15,11 +16,19 @@ namespace navegadorWeb
         public Form1()
         {
             InitializeComponent();
+            this.Resize += new System.EventHandler(this.Form_Resize);
+        }
+
+        private void Form_Resize(object sender, EventArgs e)
+        {
+            webView21.Size = this.ClientSize - new System.Drawing.Size(webView21.Location);
+            buttonIr.Left = this.ClientSize.Width - buttonIr.Width;
+            comboBox1.Width = buttonIr.Left - comboBox1.Left;
         }
 
         private void busquedaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //webView21.GoHome();
+            webView21.CoreWebView2.Navigate("https://www.google.com/");
         }
          
         private void buttonIr_Click(object sender, EventArgs e)
@@ -39,7 +48,6 @@ namespace navegadorWeb
                 comboBox1.Text = urlIngresado;
             }
             webView21.CoreWebView2.Navigate(urlIngresado);
-
         }
 
         private void adelanteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -55,7 +63,6 @@ namespace navegadorWeb
         private void Form1_Load(object sender, EventArgs e)
         {
             comboBox1.SelectedIndex = 0;
-            //webView21.GoHome();
         }
 
         private void button2_Click(object sender, EventArgs e)
