@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Web.WebView2.Core;
+using System.IO;
 
 namespace navegadorWeb
 {
@@ -48,6 +49,8 @@ namespace navegadorWeb
                 comboBox1.Text = urlIngresado;
             }
             webView21.CoreWebView2.Navigate(urlIngresado);
+            Guardar(@"C:\Users\derickcux2023\source\repos\navegadorWeb\historial.txt", comboBox1.Text);
+            leer();
         }
 
         private void adelanteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -60,9 +63,32 @@ namespace navegadorWeb
             webView21.GoBack();
         }
 
+        private void leer()
+        {
+            string fileName = @"C:\Users\derickcux2023\source\repos\navegadorWeb\historial.txt";
+
+            FileStream flujo = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+            StreamReader lector = new StreamReader(flujo);
+
+            while (lector.Peek() > -1)
+            {
+                string textoLeido = lector.ReadLine();
+                comboBox1.Items.Add(textoLeido);
+            }
+            lector.Close();
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
-            comboBox1.SelectedIndex = 0;
+            leer();
+        }
+
+        private void Guardar(string fileName, string texto)
+        {
+            FileStream stream = new FileStream(fileName, FileMode.Append, FileAccess.Write);
+            StreamWriter writer = new StreamWriter(stream);
+            writer.WriteLine(texto);
+            writer.Close();
         }
 
         private void button2_Click(object sender, EventArgs e)

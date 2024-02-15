@@ -86,13 +86,6 @@ namespace navegadorWeb
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "https://www.google.com/",
-            "https://virtual.mesoamericana.edu.gt/",
-            "https://secretaria.mesoamericana.edu.gt/alumnos/Account/Login.aspx?ReturnUrl=%2fa" +
-                "lumnos%2f",
-            "https://www.youtube.com/",
-            "https://www.facebook.com/"});
             this.comboBox1.Location = new System.Drawing.Point(12, 36);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(904, 21);
