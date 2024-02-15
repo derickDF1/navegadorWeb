@@ -50,6 +50,7 @@ namespace navegadorWeb
             }
             webView21.CoreWebView2.Navigate(urlIngresado);
             Guardar(@"C:\Users\derickcux2023\source\repos\navegadorWeb\historial.txt", comboBox1.Text);
+            comboBox1.Items.Clear();
             leer();
         }
 
