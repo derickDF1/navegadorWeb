@@ -14,6 +14,9 @@ namespace navegadorWeb
 {
     public partial class Form1 : Form
     {
+        List<Url> ListaUrls = new List<Url>();
+        
+
         public Form1()
         {
             InitializeComponent();
@@ -34,11 +37,12 @@ namespace navegadorWeb
          
         private void buttonIr_Click(object sender, EventArgs e)
         {
-            String urlIngresado = comboBox1.Text;
+            string urlIngresado = comboBox1.Text.Trim();
+            urlIngresado = urlIngresado.ToLower();
 
-            if (!(urlIngresado.StartsWith("https://")))
+            if (!urlIngresado.StartsWith("http://") && !urlIngresado.StartsWith("https://"))
             {
-                if (!(urlIngresado.Contains(".")))
+                if (!urlIngresado.Contains("."))
                 {
                     urlIngresado = "https://www.google.com/search?q=" + Uri.EscapeDataString(urlIngresado);
                 }
@@ -48,10 +52,28 @@ namespace navegadorWeb
                 }
                 comboBox1.Text = urlIngresado;
             }
+
+            Url urlExiste = ListaUrls.FirstOrDefault(u => u.Pagina.ToLower() == urlIngresado);
+
+            if (urlExiste == null)
+            {
+                Url urlNueva = new Url();
+                urlNueva.Pagina = urlIngresado;
+                urlNueva.Veces = 1;
+                urlNueva.Fecha = DateTime.Now;
+                ListaUrls.Add(urlNueva);
+            }
+            else
+            {
+                urlExiste.Veces++;
+                urlExiste.Fecha = DateTime.Now;
+            }
+
             webView21.CoreWebView2.Navigate(urlIngresado);
+
             Guardar(@"C:\Users\derickcux2023\source\repos\navegadorWeb\historial.txt", comboBox1.Text);
-            comboBox1.Items.Clear();
             leer();
+
         }
 
         private void adelanteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -67,16 +89,26 @@ namespace navegadorWeb
         private void leer()
         {
             string fileName = @"C:\Users\derickcux2023\source\repos\navegadorWeb\historial.txt";
-
-            FileStream flujo = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+            FileStream flujo = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.Read);
             StreamReader lector = new StreamReader(flujo);
+            ListaUrls.Clear();
 
             while (lector.Peek() > -1)
             {
-                string textoLeido = lector.ReadLine();
-                comboBox1.Items.Add(textoLeido);
+                Url url = new Url();
+                url.Pagina = lector.ReadLine();
+                string veces = Convert.ToString(lector.ReadLine());
+                url.Veces = Convert.ToInt32(veces);
+                url.Fecha = Convert.ToDateTime(lector.ReadLine());
+                //string textoLeido = lector.ReadLine();
+                //comboBox1.Items.Add(textoLeido);
+                ListaUrls.Add(url);
             }
             lector.Close();
+
+            comboBox1.DisplayMember = "Pagina";
+            comboBox1.DataSource = ListaUrls;
+            comboBox1.Refresh();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -86,15 +118,15 @@ namespace navegadorWeb
 
         private void Guardar(string fileName, string texto)
         {
-            FileStream stream = new FileStream(fileName, FileMode.Append, FileAccess.Write);
-            StreamWriter writer = new StreamWriter(stream);
-            writer.WriteLine(texto);
-            writer.Close();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            
+            FileStream flujo = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.Write);
+            StreamWriter lector = new StreamWriter(flujo);
+            foreach (Url url in ListaUrls)
+            {
+                lector.WriteLine(url.Pagina);
+                lector.WriteLine(url.Veces);
+                lector.WriteLine(url.Fecha);
+            }
+            lector.Close();
         }
     }
 }
